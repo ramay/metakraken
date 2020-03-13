@@ -1,0 +1,34 @@
+# **************************************
+# * Parameters for metprofile pipeline *
+# **************************************
+
+# List of files
+list_files: "utils/list_files_test.txt"
+
+# Path to sequences
+path: "/gpfs/snyder_work/shared/lsycuro_labshare/projects/shared/CHILD/clean_reads/"
+
+# Suffix for forward reads
+for: "_bmtagged_1.fastq"
+
+# Suffix for reverse reads
+rev: "_bmtagged_2.fastq"
+
+# kraken database location
+kraken_db: "utils/databases/kraken2db_2020_02_26"
+
+
+# Level for bracken taxa
+level: "S"
+# read length for bracken
+readlen: 100
+#Minimum threshold of number of reads 
+threshold: 10
+
+
+## Profile R script inputs
+variablex: "Sample_time"
+variabley: "AS_bev4"
+topn: 20
+outputRscript: "output/rplots"
+metadata_file: "metadata.csv"

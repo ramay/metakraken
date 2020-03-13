@@ -1,0 +1,5 @@
+Sample_ID	Type	Group
+S0063-0001_S61	A	Control	
+S0063-0002_S73	B	Control
+S0063-0003_S85	C	Condition
+S0063-0004_S97	D	Condition
