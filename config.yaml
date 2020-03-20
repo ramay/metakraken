@@ -21,7 +21,7 @@ kraken_db: "utils/databases/kraken2db_2020_02_26"
 # Level for bracken taxa
 level: "S"
 # read length for bracken
-readlen: 100
+readlen: 150
 #Minimum threshold of number of reads 
 threshold: 10
 
@@ -30,5 +30,5 @@ threshold: 10
 variablex: "Sample_time"
 variabley: "AS_bev4"
 topn: 20
-outputRscript: "output/rplots"
+outputRscript: "output/plots"
 metadata_file: "metadata.csv"
