@@ -8,7 +8,7 @@
 
 
 ## ****IMPORTANT*** 
-## Make sure you have modified the varibales 
+## Make sure you have modified the varibales  variableX & variableFacet
 ## associated with this Rscript in the config.yaml file.
 ## This script works with a snakemake file. 
 ## It receive a S4 object called snakemake from the snakemake
@@ -68,7 +68,6 @@ plot_bar<-function (physeq, x = "Sample", y = "Abundance", fill = NULL,
   fill=reorder(mdf[,fill],-mdf[,y])
   x=reorder(mdf[,x],-mdf[,y])
   p = ggplot(mdf, aes_string(x = x, y = y, fill = fill))
-  #p = p + geom_bar(stat = "identity", position = "stack", color = fill)
   p = p + geom_col()
   p = p + theme(axis.text.x = element_text(angle = 90, hjust = 0))
   if (!is.null(facet_grid)) {
@@ -81,8 +80,10 @@ plot_bar<-function (physeq, x = "Sample", y = "Abundance", fill = NULL,
 }
 
 
-plot_taxa<-function(ps,taxaRank,variablex,variabley,cols,topn=NULL){
-  ps_p<-tax_glom(ps,taxrank = taxaRank) 
+plot_taxa<-function(ps,taxaRank,variablex,variabley,cols,topn=NULL)
+{
+  
+ ps_p<-tax_glom(ps,taxrank = taxaRank) 
 
  message("*** Generating ",taxaRank," level plots ....") 
 
@@ -101,8 +102,8 @@ plot_taxa<-function(ps,taxaRank,variablex,variabley,cols,topn=NULL){
     scale_y_continuous(position = "right")
 }
 
-# Taken from https://rdrr.io/github/mmclaren42/metaphlanr/src/R/metaphlan.R
 
+# Taken from https://rdrr.io/github/mmclaren42/metaphlanr/src/R/metaphlan.R
 parse_taxonomy <- function (clade, derep = TRUE) {
   # The clade string has the form
   # "k__Archaea|p__Euryarchaeota|c__Methanobacteria|o__Methanobacteriales|f__Methanobacteriaceae|g__Methanosphaera|s__Methanosphaera_stadtmanae|t__GCF_000012545"
@@ -133,14 +134,13 @@ seqtab<-tab[,2:ncol(tab)]
 
 
 # Make Phyloseq object
-
 ps <- phyloseq(otu_table(seqtab, taxa_are_rows=TRUE), 
 	sample_data(metadata), tax_table(as.matrix(taxa))) %>% 
   	subset_taxa(.,!is.na(Species)) %>%
   	subset_taxa(.,is.na(Strain))
 
 
-# colors for plots
+# Colors for plots
 cols=c("#080068","#f76e40","#169989","#db2335","#efcb4a", "#4363d8", "#42d4f4",
        "#911eb4", "#bfef45", "#fabebe", "#9A6324", "#000075", '#3cb44b', '#ffe119',
        '#4363d8', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe','#008080',
@@ -196,7 +196,6 @@ ggsave(Species+theme(text = element_text(size=txtsize)),
 
 
 # Save the melted phyloseq object in a file.
-
 top_sp <-tax_glom(ps, "Species")%>% 
   transform_sample_counts(., function (x) x / sum(x)) %>% psmelt()
 
