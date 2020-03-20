@@ -80,11 +80,15 @@ Test the pipeline by running snakemake -np. This command prints out the commands
 
 To run the pipeline on the Synergy compute cluster, enter the following command from the project directory:
 
+```
 snakemake --cluster-config cluster.json --cluster 'bsub -n {cluster.n} -R {cluster.resources} -W {cluster.walllim} -We {cluster.time} -M {cluster.maxmem} -oo {cluster.output} -e {cluster.error}' --jobs 500 --use-conda
+```
+
 The above command submits jobs to Synergy, one for each sample and step of the QC pipeline. Note: the file cluster.json contains the parameters for the LSF job submission system that Synergy uses. In most cases, this file should not be modified.
 
-Results and log files
-Snakemake will create a directory for the results of the pipeline as well as a directory for log files. Log files of each step of the pipeline will be written to the logs directory.
+## Results and log files
+
+Snakemake will create a directory for the results of the pipeline (default: output) as well as a directory called logs for all the log files.
 
 # Addition information 
 
