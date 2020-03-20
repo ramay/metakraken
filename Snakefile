@@ -116,7 +116,7 @@ rule make_plots:
     output:
         res=config["outputRscript"] + "/species_melted.csv"
     conda:"utils/envs/rscript.yaml"
-    log: "output/logs/Rscript.log"
+    log: "output/logs/make_plots.log"
     script:
         "utils/scripts/plot_profile.R"
 
