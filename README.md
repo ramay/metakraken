@@ -16,6 +16,10 @@ Output:
 
 ## Pipeline summary
 
+
+<img src="utils/rulegraph.png" width="450">
+
+
 ### Steps
 
 
