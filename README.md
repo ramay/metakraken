@@ -62,7 +62,9 @@ All the parameters required to run this pipeline are specified in a config file,
 
 1. kraken_db: Location of the Kraken database to use.
 2. level: Level for bracken taxa (defualt 'S', Option:'D', 'P', 'C', 'O', 'F', 'G', 'S')
-3. readlen: Read length required for Bracken ***PLEASE PAY ATTENTION***
+3. redreadlen: Read length required for Bracken ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
+    
+
 4. threshold: specifies the minimum number of reads required for a classification at the specified rank
 
 #### Barplots related (used by plot_profile.R)
