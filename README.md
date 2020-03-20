@@ -21,7 +21,7 @@ Output:
 
 1. Kraken2 is used to generate profiles of microbial clades and their abundances.
 2. Bracken is used to re-estimate reads assigned to species.
-3. Kreprot2mpa is used to generate profiles in mpa format which is similar to one used by Metaphlan
+3. Kreprot2mpa is used to generate profiles in mpa format which is similar to one used by MetaphlAn2
 4. Normalized mpa files to generate percentages of each clade
 5. Merge all sampel profiles into one table.
 6. Generate a heatmap with N most abundant species.
@@ -32,7 +32,7 @@ Output:
 To use this pipeline, navigate to your project directory and clone this repository into that directory using the following command:
 
 ```
-git clone https://github.com/SycuroLab/metkraken.git metakraken
+git clone https://github.com/SycuroLab/metakraken.git metakraken
 ```
 
 Note: you need to have **conda** and **snakemake** installed in order to run this. To install conda, see the instructions [here](https://github.com/ucvm/synergy/wiki). 
@@ -61,14 +61,14 @@ All the parameters required to run this pipeline are specified in a config file,
 #### Kraken + Bracken related
 
 1. kraken_db: Location of the Kraken database to use.
-2. level: Level for bracken taxa (defualt 'S', Option:'D','P','C','O','F','G','S')
-3. readlen: Read length required for Bracken **PLEASE PAY ATTENTION**
+2. level: Level for bracken taxa (defualt 'S', Option:'D', 'P', 'C', 'O', 'F', 'G', 'S')
+3. readlen: Read length required for Bracken ***PLEASE PAY ATTENTION***
 4. threshold: specifies the minimum number of reads required for a classification at the specified rank
 
-#### Barplots related
+#### Barplots related (used by plot_profile.R)
 
-1. variableX: Used by the plot_profile.R script as the x-axis variable to make barplots at different taxa level
-2. variableFacet:
+1. variableX:  X-axis variable to make barplots at different taxa level
+2. variableFacet: Facet variable to make barplots at different taxa level
 3. topN: Top N most abundant families/genra/species to be plotted by the R script
 4. metadata: comma delimited (csv) metadata file with Sample Names same as used in list_files file.
 
