@@ -116,6 +116,7 @@ rule make_plots:
     output:
         res=config["outputRscript"] + "/species_melted.csv"
     conda:"utils/envs/rscript.yaml"
+    log: "output/logs/Rscript.log"
     script:
         "utils/scripts/plot_profile.R"
 
@@ -127,7 +128,7 @@ rule heatmap:
     input: "output/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
     output: config["outputRscript"] + "/abundance_heatmap_species.png"
     params:
-       topn = config["topn"],
+       topn = config["topN"],
     conda: "utils/envs/hclust_env.yaml"
     shell:
             """

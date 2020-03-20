@@ -28,7 +28,7 @@ threshold: 10
 
 ## Profile R script inputs
 variableX: "Sample_time"
-variableFacet: "Gender"
+variableFacet: "AS_bev4"
 topN: 20
 outputRscript: "output/plots"
 metadata_file: "metadata.csv"
