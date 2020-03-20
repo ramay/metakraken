@@ -60,19 +60,19 @@ All the parameters required to run this pipeline are specified in a config file,
 
 #### Kraken + Bracken related
 
-1. kraken_db: Location of the Kraken database to use.
+1. kraken_db: Location of the Kraken database to use
 2. level: Level for bracken taxa (defualt 'S', Option:'D', 'P', 'C', 'O', 'F', 'G', 'S')
 3. redreadlen: Read length required for Bracken ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
     
 
-4. threshold: specifies the minimum number of reads required for a classification at the specified rank
+4. threshold: specifies the minimum number of reads required for a classification at the specified rank. ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) 
 
 #### Barplots related (used by plot_profile.R)
 
 1. variableX:  X-axis variable to make barplots at different taxa level
 2. variableFacet: Facet variable to make barplots at different taxa level
 3. topN: Top N most abundant families/genra/species to be plotted by the R script
-4. metadata: comma delimited (csv) metadata file with Sample Names same as used in list_files file.
+4. metadata: comma delimited (csv) metadata file with Sample Names same as used in list_files file ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 
 ## Running Instructions
 
