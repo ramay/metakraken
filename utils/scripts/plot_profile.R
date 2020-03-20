@@ -47,10 +47,10 @@ colnames(tab) <- strsplit2(colnames(tab),split = "_")[,1]
 
 # Define variables for plots
 
-variablex=snakemake@config$variablex
-variabley=snakemake@config$variabley
+variablex=snakemake@config$variableX
+variabley=snakemake@config$variableFacet
 output_dir=snakemake@config$outputRscript
-topn=snakemake@config$topn
+topn=snakemake@config$topN
 
 
 ## Change these variables if the plots don't look good
