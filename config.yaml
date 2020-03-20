@@ -15,7 +15,7 @@ for: "_bmtagged_1.fastq"
 rev: "_bmtagged_2.fastq"
 
 # kraken database location
-kraken_db: "utils/databases/kraken2db_2020_02_26"
+kraken_db: "gpfs/snyder_work/shared/lsycuro_labshare/dbs/kraken2db_2020_02_26"
 
 
 # Level for bracken taxa
