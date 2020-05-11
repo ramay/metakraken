@@ -1,6 +1,7 @@
 # ************************************
 # Snakefile for Kraken2 and Bracken  pipeline *
 # Compiled by Hena R. Ramay
+# Adapted from metaplhan pipeline by Alana Schick
 # Bioinformatician @ IMC
 # March 2020
 # ************************************
@@ -19,8 +20,8 @@ SAMPLES = SAMPLES[0].tolist()
 
 rule all:
     input:
-        config["outputRscript"] + "/species_melted.csv",
-        config["outputRscript"] + "/abundance_heatmap_species.png"
+#        config["outputRscript"] + "/species_melted.csv",
+        config["output_dir"] + "/plots/abundance_heatmap_species.png"
 
 
 ## Runs kraken2 with the specified database
@@ -30,12 +31,12 @@ rule kraken2:
         r1 = config["path"]+"{sample}"+config["for"],
         r2 = config["path"]+"{sample}"+config["rev"]
     output:
-         kr = "output/kraken2/{sample}_kreport.tab",
-#        pr = "output/metaphlan2/{sample}_profile.tab"
+         kr = config["output_dir"]+"/kraken2/{sample}_kreport.tab",
+#        pr = config["output_dir"]+"/metaphlan2/{sample}_profile.tab"
     params:
         db = config["kraken_db"],
 	threads=1
-    log: "output/logs/{sample}_kraken.log"
+    log: config["output_dir"]+"/logs/{sample}_kraken.log"
                 
     conda: "utils/envs/kb.yaml"
     shell:
@@ -48,17 +49,17 @@ rule kraken2:
 
 rule bracken:
     input:
-        r1 = "output/kraken2/{sample}_kreport.tab"
+        r1 = config["output_dir"]+"/kraken2/{sample}_kreport.tab"
     output:
-        br1 = "output/bracken/{sample}_breport",
-        br2 = "output/kraken2/{sample}_kreport_bracken.tab"
+        br1 = config["output_dir"]+"/bracken/{sample}_breport",
+        br2 = config["output_dir"]+"/kraken2/{sample}_kreport_bracken.tab"
     params:
         db = config["kraken_db"],
         level = config["level"],
 	readlen=config["readlen"],
 	threshold=config["threshold"]
     conda: "utils/envs/kb.yaml"
-    log: "output/logs/{sample}_braken.log"
+    log: config["output_dir"]+"/logs/{sample}_braken.log"
     shell:
           "bracken -d {params.db} -i {input.r1} -l {params.level} -t {params.threshold} -r {params.readlen} -o {output.br1} >> {log}"
 
@@ -66,9 +67,9 @@ rule bracken:
 ## Convert braken reprot to Metaphlan style output
 rule kreport2mpa:
     input:
-        "output/kraken2/{sample}_kreport_bracken.tab"
+        config["output_dir"]+"/kraken2/{sample}_kreport_bracken.tab"
     output:
-        "output/kreport2mpa/{sample}_mpa.tab"
+        config["output_dir"]+"/kreport2mpa/{sample}_mpa.tab"
     conda:"utils/envs/kb.yaml"
     shell:
           "kreport2mpa.py -r {input} -o {output}"
@@ -79,9 +80,9 @@ rule kreport2mpa:
 
 rule normalize_mpa:
     input:
-        "output/kreport2mpa/{sample}_mpa.tab"
+        config["output_dir"]+"/kreport2mpa/{sample}_mpa.tab"
     output:
-        "output/kreport2mpa_norm/{sample}_profile.tab"
+        config["output_dir"]+"/kreport2mpa_norm/{sample}_profile.tab"
     shell:
         """
         sum=$(grep -vP "\\|" {input} | cut -f 2 | awk '{{sum += $1}} END {{printf ("%.2f\\n", sum/100)}}')
@@ -94,10 +95,10 @@ rule normalize_mpa:
 
 rule merge_mpa:
     input:
-        expand("output/kreport2mpa_norm/{sample}_profile.tab", sample=SAMPLES)
+        expand(config["output_dir"]+"/kreport2mpa_norm/{sample}_profile.tab", sample=SAMPLES)
     output:
-        merge = "output/kreport2mpa_norm/merged_metakraken_abundance_table.txt",
-        merge_species = "output/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
+        merge = config["output_dir"]+"/kreport2mpa_norm/merged_metakraken_abundance_table.txt",
+        merge_species = config["output_dir"]+"/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
     conda:"utils/envs/metaphlan2_env.yaml"
     shell:
         """
@@ -111,12 +112,12 @@ rule merge_mpa:
 
 rule make_plots:
     input:
-       tab="output/kreport2mpa_norm/merged_metakraken_abundance_table.txt",
-       sp="output/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
+       tab=config["output_dir"]+"/kreport2mpa_norm/merged_metakraken_abundance_table.txt",
+       sp=config["output_dir"]+"/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
     output:
-        res=config["outputRscript"] + "/species_melted.csv"
+        res=config["output_dir"] + "/plots/species_melted.csv"
     conda:"utils/envs/rscript.yaml"
-    log: "output/logs/make_plots.log"
+    log: config["output_dir"]+"/logs/make_plots.log"
     script:
         "utils/scripts/plot_profile.R"
 
@@ -125,8 +126,8 @@ rule make_plots:
 ## clustering heatmap
 
 rule heatmap:
-    input: "output/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
-    output: config["outputRscript"] + "/abundance_heatmap_species.png"
+    input: config["output_dir"]+"/kreport2mpa_norm/merged_metakraken_abundance_species.txt"
+    output: config["output_dir"] + "/plots/abundance_heatmap_species.png"
     params:
        topn = config["topN"],
     conda: "utils/envs/hclust_env.yaml"

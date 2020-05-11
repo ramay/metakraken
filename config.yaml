@@ -3,32 +3,38 @@
 # **************************************
 
 # List of files
-list_files: "utils/list_files_test.txt"
+list_files: "utils/mock_files.txt"
 
-# Path to sequences
-path: "/gpfs/snyder_work/shared/lsycuro_labshare/projects/shared/CHILD/clean_reads/"
-
-# Suffix for forward reads
-for: "_bmtagged_1.fastq"
-
-# Suffix for reverse reads
-rev: "_bmtagged_2.fastq"
-
-# kraken database location
-kraken_db: "gpfs/snyder_work/shared/lsycuro_labshare/dbs/kraken2db_2020_02_26"
-
+output_dir: "output_mock_t"
 
 # Level for bracken taxa
 level: "S"
 # read length for bracken
-readlen: 150
+readlen: 250
 #Minimum threshold of number of reads 
-threshold: 10
+threshold: 150
+
+
+
+# Path to sequences
+
+#path: "/gpfs/snyder_work/shared/lsycuro_labshare/projects/shared/CHILD/clean_reads/"
+path: "/export/home/hramay/projects/Sycuro/kraken2/metakraken/mock17/"
+
+# Suffix for forward reads
+for: "-forward-read.fastq"
+
+# Suffix for reverse reads
+rev: "-reverse-read.fastq"
+
+# kraken database location
+kraken_db: "/gpfs/home/hramay/projects/databases/kraken2db_2020_02_26"
+#kraken_db: "/gpfs/home/hramay/projects/databases/kraken2db_2020_04_04_kmer70"
+
 
 
 ## Profile R script inputs
 variableX: "Sample_time"
 variableFacet: "AS_bev4"
 topN: 20
-outputRscript: "output/plots"
 metadata_file: "metadata.csv"
